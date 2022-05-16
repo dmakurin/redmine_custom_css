@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_custom_css do
   name 'Redmine Custom CSS plugin'
   author 'Martin DENIZET'
   description 'Allows to customize Redmine\'s CSS'
-  version '0.1.7'
+  version '2022.05.0'
   url 'https://github.com/martin-denizet/redmine_custom_css'
   author_url 'http://martin-denizet.com'
 
