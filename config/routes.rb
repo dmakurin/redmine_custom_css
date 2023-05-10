@@ -20,3 +20,11 @@
 #
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
+
+Rails.application.routes.draw do
+  resources :users do
+    member do
+      resource :custom_css, controller: "custom_css", only: [:edit, :update]
+    end
+  end
+end

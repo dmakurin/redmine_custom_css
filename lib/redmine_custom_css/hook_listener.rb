@@ -21,8 +21,20 @@
 module RedmineCustomCss
   class HookListener < Redmine::Hook::ViewListener
     def view_layouts_base_html_head(context)
+      html = ""
       css = Setting.plugin_redmine_custom_css['css']
-      "<style type=\"text/css\">#{css}</style>" unless css.nil? or css.empty?
+
+      html << %{<style type="text/css">#{css}</style>} if css.present?
+      html << stylesheet_link_tag("redmine_custom_css", plugin: "redmine_custom_css")
+      html
+    end
+
+    def view_layouts_base_body_bottom(_context)
+      %{<style type="text/css">#{sanitize(User.current.custom_css)}</style>}
+    end
+
+    def view_my_account_contextual(context)
+      link_to "Custom Css", edit_custom_css_path(context[:user]), class: "icon custom-css-link"
     end
   end
 end
