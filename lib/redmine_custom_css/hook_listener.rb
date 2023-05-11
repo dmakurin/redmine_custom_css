@@ -24,13 +24,13 @@ module RedmineCustomCss
       html = ""
       css = Setting.plugin_redmine_custom_css['css']
 
-      html << %{<style type="text/css">#{css}</style>} if css.present?
+      html << %{<style type="text/css">#{Sanitize::CSS.stylesheet(css, Sanitize::Config::RELAXED)}</style>} if css.present?
       html << stylesheet_link_tag("redmine_custom_css", plugin: "redmine_custom_css")
       html
     end
 
     def view_layouts_base_body_bottom(_context)
-      %{<style type="text/css">#{sanitize(User.current.custom_css)}</style>}
+      %{<style type="text/css">#{Sanitize::CSS.stylesheet(User.current.custom_css, Sanitize::Config::RELAXED)}</style>}
     end
 
     def view_my_account_contextual(context)
