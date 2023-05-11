@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CustomCssController < ApplicationController
-  before_action :find_user
+  before_action :find_user, :authorize
 
   def edit
   end
@@ -27,5 +27,14 @@ class CustomCssController < ApplicationController
 
   def css_params
     params.require(:user_stylesheet).permit(:custom_css)
+  end
+
+  # /users/:id/custom_css/edit is accessible only for:
+  # * admin
+  # * current user
+  def authorize
+    return if User.current.admin?
+
+    render_403 unless User.current.id == @user.id
   end
 end
