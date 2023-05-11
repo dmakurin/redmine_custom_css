@@ -20,3 +20,27 @@
 #
 # Load the Redmine helper
 require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+
+module RedmineCustomCss
+  module FixturesLoader
+    def fixtures(*table_names)
+      dir = "#{File.dirname __FILE__}/fixtures/"
+      table_names.each do |x|
+        ActiveRecord::FixtureSet.create_fixtures dir, x if File.exist? "#{dir}/#{x}.yml"
+      end
+      super table_names
+    end
+  end
+
+  class ControllerTest < Redmine::ControllerTest
+    extend FixturesLoader
+  end
+
+  class HelperTest < Redmine::HelperTest
+    extend FixturesLoader
+  end
+
+  class IntegrationTest < Redmine::IntegrationTest
+    extend FixturesLoader
+  end
+end
