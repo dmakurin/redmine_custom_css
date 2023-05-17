@@ -34,7 +34,7 @@ module RedmineCustomCss
     end
 
     def view_my_account_contextual(context)
-      link_to "Custom Css", edit_custom_css_path(context[:user]), class: "icon custom-css-link"
+      link_to l(:label_cf_custom_css), edit_custom_css_path(context[:user]), class: "icon custom-css-link"
     end
   end
 end
